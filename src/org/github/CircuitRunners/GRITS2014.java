@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SimpleRobot;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Timer;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -21,16 +22,16 @@ import edu.wpi.first.wpilibj.Talon;
  * directory.
  */
 public class GRITS2014 extends SimpleRobot {
-    
-    //Robot Drive
-    RobotDrive drive;
-    
+
     // Talons
     public Talon leftFront;
     public Talon leftBack;
     public Talon rightFront;
     public Talon rightBack;
-    
+
+    // Robot Drive
+    RobotDrive drive;
+
     // Joystick
     public Joystick xbone;
 
@@ -48,15 +49,19 @@ public class GRITS2014 extends SimpleRobot {
      * This function is called once each time the robot enters autonomous mode.
      */
     public void autonomous() {
-        
+        drive.setSafetyEnabled(false);
+        drive.drive(0.5, 0.0);
+        Timer.delay(2.0);
+        drive.drive(0.0, 0.0);
     }
 
     /**
      * This function is called once each time the robot enters operator control.
      */
     public void operatorControl() {
-        while(isOperatorControl()){
-            
+        drive.setSafetyEnabled(true);
+        while(isOperatorControl() && isEnabled()){
+            drive.arcadeDrive(xbone, true);
         }
     }
 }
