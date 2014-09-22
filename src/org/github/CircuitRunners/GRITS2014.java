@@ -28,8 +28,10 @@ public class GRITS2014 extends SimpleRobot {
     public Talon leftBack;
     public Talon rightFront;
     public Talon rightBack;
-    
+
+    // Intake
     public Talon intakeMotor;
+
     // Robot Drive
     public RobotDrive drive;
 
@@ -41,7 +43,7 @@ public class GRITS2014 extends SimpleRobot {
         leftBack = new Talon(2);
         rightFront = new Talon(3);
         rightBack = new Talon(4);
-        
+
         intakeMotor = new Talon(5);
 
         drive = new RobotDrive(leftFront, leftBack, rightFront, rightBack);
@@ -53,8 +55,12 @@ public class GRITS2014 extends SimpleRobot {
      */
     public void autonomous() {
         drive.setSafetyEnabled(false);
+
+        // Drive forward for 2 seconds
         drive.drive(0.5, 0.0);
         Timer.delay(2.0);
+
+        // Stop
         drive.drive(0.0, 0.0);
     }
 
@@ -64,9 +70,10 @@ public class GRITS2014 extends SimpleRobot {
     public void operatorControl() {
         drive.setSafetyEnabled(true);
         while(isOperatorControl() && isEnabled()){
+
             // Arcade drive
             drive.arcadeDrive(xbone, 1, xbone, 2, true);
-            
+
             // Intake control
             if(xbone.getRawButton(3)) {
                 intakeMotor.set(0.4);
