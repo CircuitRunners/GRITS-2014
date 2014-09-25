@@ -8,6 +8,7 @@
 package org.github.CircuitRunners;
 
 
+import com.sun.squawk.util.MathUtils;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SimpleRobot;
@@ -59,7 +60,7 @@ public class GRITS2014 extends SimpleRobot {
         // Stop
         drive.drive(0.0, 0.0);
     }
-
+    
     /**
      * This function is called once each time the robot enters operator control.
      */
@@ -68,9 +69,12 @@ public class GRITS2014 extends SimpleRobot {
         drive.setSafetyEnabled(true);
         
         while(isOperatorControl() && isEnabled()){
-
+            
+            double moveValue = MathUtils.pow(xbone.getRawAxis(2), 3);
+            double rotateValue = MathUtils.pow(xbone.getRawAxis(1), 3);
+            
             // Arcade drive
-            drive.arcadeDrive(xbone, 2, xbone, 1, true);
+            drive.arcadeDrive(moveValue, rotateValue);
 
             // Intake control
             if(xbone.getRawButton(3)) {
