@@ -24,10 +24,8 @@ import edu.wpi.first.wpilibj.Timer;
 public class GRITS2014 extends SimpleRobot {
 
     // Talons
-    public Talon leftFront;
-    public Talon leftBack;
-    public Talon rightFront;
-    public Talon rightBack;
+    public Talon left;
+    public Talon right;
 
     // Intake
     public Talon intakeMotor;
@@ -39,14 +37,12 @@ public class GRITS2014 extends SimpleRobot {
     public Joystick xbone;
 
     public GRITS2014() {
-        leftFront = new Talon(1);
-        leftBack = new Talon(2);
-        rightFront = new Talon(3);
-        rightBack = new Talon(4);
+        left = new Talon(1);
+        right = new Talon(2);
 
-        intakeMotor = new Talon(5);
+        intakeMotor = new Talon(3);
 
-        drive = new RobotDrive(leftFront, leftBack, rightFront, rightBack);
+        drive = new RobotDrive(left, right);
 
         xbone = new Joystick(1);
     }
@@ -68,15 +64,17 @@ public class GRITS2014 extends SimpleRobot {
      * This function is called once each time the robot enters operator control.
      */
     public void operatorControl() {
+        
         drive.setSafetyEnabled(true);
+        
         while(isOperatorControl() && isEnabled()){
 
             // Arcade drive
-            drive.arcadeDrive(xbone, 1, xbone, 2, true);
+            drive.arcadeDrive(xbone, 2, xbone, 1, true);
 
             // Intake control
             if(xbone.getRawButton(3)) {
-                intakeMotor.set(0.4);
+                intakeMotor.set(-0.4);
             } else if (xbone.getRawButton(1)) {
                 intakeMotor.set(1);
             } else {
