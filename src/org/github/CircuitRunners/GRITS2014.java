@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SimpleRobot;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.Victor;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -30,6 +31,9 @@ public class GRITS2014 extends SimpleRobot {
 
     // Intake
     public Talon intakeMotor;
+    
+    // Kicker
+    public Victor kickerMotor;
 
     // Robot Drive
     public RobotDrive drive;
@@ -42,6 +46,8 @@ public class GRITS2014 extends SimpleRobot {
         right = new Talon(2);
 
         intakeMotor = new Talon(3);
+        
+        kickerMotor = new Victor(4);
 
         drive = new RobotDrive(left, right);
 
@@ -68,10 +74,16 @@ public class GRITS2014 extends SimpleRobot {
         
         drive.setSafetyEnabled(true);
         
+        double c = 0.4;
+        
         while(isOperatorControl() && isEnabled()){
             
-            double moveValue = MathUtils.pow(xbone.getRawAxis(2), 3);
-            double rotateValue = MathUtils.pow(xbone.getRawAxis(1), 3);
+            if (xbone.getRawButton(4)) {
+                c = 1;
+            }
+            
+            double moveValue = c * MathUtils.pow(xbone.getRawAxis(2), 3);
+            double rotateValue = c * MathUtils.pow(xbone.getRawAxis(1), 3);
             
             // Arcade drive
             drive.arcadeDrive(moveValue, rotateValue);
@@ -84,6 +96,12 @@ public class GRITS2014 extends SimpleRobot {
             } else {
                 intakeMotor.set(0.0);
             }
+            
+            // Kicker control
+            if (xbone.getRawButton(6)) {
+                kickerMotor.set(1);
+            }
+            
         }
     }
 }
