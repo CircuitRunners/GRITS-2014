@@ -24,7 +24,10 @@ import edu.wpi.first.wpilibj.Victor;
  * directory.
  */
 public class GRITS2014 extends SimpleRobot {
-
+    
+    public static final double DEADBAND_LOW = -0.2;
+    public static final double DEADBAND_HIGH = 0.2;
+    
     // Talons
     public Talon left;
     public Talon right;
@@ -74,16 +77,18 @@ public class GRITS2014 extends SimpleRobot {
         
         drive.setSafetyEnabled(true);
         
-        double c = 0.4;
+        double c;
         
         while(isOperatorControl() && isEnabled()){
             
             if (xbone.getRawButton(4)) {
                 c = 1;
+            } else {
+                c = 0.4;
             }
             
-            double moveValue = c * MathUtils.pow(xbone.getRawAxis(2), 3);
-            double rotateValue = c * MathUtils.pow(xbone.getRawAxis(1), 3);
+            double moveValue = c * MathUtils.pow(deadband(xbone.getRawAxis(2)), 3);
+            double rotateValue = c * MathUtils.pow(deadband(xbone.getRawAxis(1)), 3);
             
             // Arcade drive
             drive.arcadeDrive(moveValue, rotateValue);
@@ -99,9 +104,20 @@ public class GRITS2014 extends SimpleRobot {
             
             // Kicker control
             if (xbone.getRawButton(6)) {
-                kickerMotor.set(1);
+                kickerMotor.set(-1);
+            } else if (xbone.getRawButton(5)) {
+                kickerMotor.set(0.4);
+            } else {
+                kickerMotor.set(0);
             }
-            
         }
+    }
+    
+    //Deadband
+    public double deadband(double d){
+        if(d > DEADBAND_LOW && d < DEADBAND_HIGH){
+            d = 0;
+        }
+        return d;
     }
 }
