@@ -84,7 +84,7 @@ public class GRITS2014 extends SimpleRobot {
             if (xbone.getRawButton(4)) {
                 c = 1;
             } else {
-                c = 0.4;
+                c = 0.6;
             }
             
             double moveValue = c * MathUtils.pow(deadband(xbone.getRawAxis(2)), 3);
