@@ -31,7 +31,7 @@ public class GRITS2014 extends SimpleRobot {
 
     // Intake
     public Talon intakeMotor;
-    
+
     // Kicker
     public Victor kickerMotor;
 
@@ -46,7 +46,7 @@ public class GRITS2014 extends SimpleRobot {
         right = new Talon(2);
 
         intakeMotor = new Talon(3);
-        
+
         kickerMotor = new Victor(4);
 
         drive = new RobotDrive(left, right);
@@ -74,12 +74,14 @@ public class GRITS2014 extends SimpleRobot {
         
         drive.setSafetyEnabled(true);
         
-        double c = 0.4;
+        double c;
         
         while(isOperatorControl() && isEnabled()){
             
             if (xbone.getRawButton(4)) {
                 c = 1;
+            } else {
+                c = 0.4;
             }
             
             double moveValue = c * MathUtils.pow(xbone.getRawAxis(2), 3);
@@ -99,9 +101,12 @@ public class GRITS2014 extends SimpleRobot {
             
             // Kicker control
             if (xbone.getRawButton(6)) {
-                kickerMotor.set(1);
+                kickerMotor.set(-1);
+            } else if (xbone.getRawButton(5)) {
+                kickerMotor.set(0.4);
+            } else {
+                kickerMotor.set(0);
             }
-            
         }
     }
 }
