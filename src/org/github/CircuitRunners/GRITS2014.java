@@ -85,7 +85,7 @@ public class GRITS2014 extends SimpleRobot {
             }
             
             double moveValue = c * MathUtils.pow(xbone.getRawAxis(2), 3);
-            double rotateValue = c * MathUtils.pow(xbone.getRawAxis(1), 3);
+            double rotateValue = (c * MathUtils.pow(xbone.getRawAxis(1), 3))/2 + 0.5;
             
             // Arcade drive
             drive.arcadeDrive(moveValue, rotateValue);
