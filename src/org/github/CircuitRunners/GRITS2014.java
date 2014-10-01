@@ -34,7 +34,7 @@ public class GRITS2014 extends SimpleRobot {
 
     // Intake
     public Talon intakeMotor;
-    
+
     // Kicker
     public Victor kickerMotor;
 
@@ -49,7 +49,7 @@ public class GRITS2014 extends SimpleRobot {
         right = new Talon(2);
 
         intakeMotor = new Talon(3);
-        
+
         kickerMotor = new Victor(4);
 
         drive = new RobotDrive(left, right);
