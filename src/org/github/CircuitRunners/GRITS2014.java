@@ -106,7 +106,7 @@ public class GRITS2014 extends SimpleRobot {
             if (xbone.getRawButton(6)) {
                 kickerMotor.set(-1);
             } else if (xbone.getRawButton(5)) {
-                kickerMotor.set(1);
+                kickerMotor.set(0.4);
             } else {
                 kickerMotor.set(0);
             }
