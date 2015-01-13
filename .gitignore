@@ -1,4 +1,4 @@
-/nbproject
-/resources
+/nbproject/**/*
+/resources/**/*
 *.properties
 *.xml
